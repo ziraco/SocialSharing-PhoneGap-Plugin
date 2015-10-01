@@ -4,7 +4,7 @@ module.exports = {
     share: function (win, fail, args) {
         //Text Message
         var message = args[0];
-        //Title 
+        //Title
         var subject = args[1];
         //File(s) Path
         var fileOrFileArray = args[2];
@@ -20,7 +20,8 @@ module.exports = {
                 var storageItems = [];
                 var filesCount = fileOrFileArray.length;
                 for (var i = 0; i < fileOrFileArray.length; i++) {
-                    Windows.Storage.StorageFile.getFileFromPathAsync(fileOrFileArray[i]).done(
+                  var uri = new Windows.Foundation.Uri(fileOrFileArray[i]);
+                  Windows.Storage.StorageFile.getFileFromApplicationUriAsync(uri).done(
                         function (file) {
                             storageItems.push(file);
                             if (!--filesCount) {
@@ -59,7 +60,7 @@ module.exports = {
     shareViaEmail: function (win, fail, args) {
         //Text Message
         var message = args[0];
-        //Title 
+        //Title
         var subject = args[1];
         //File(s) Path
         var fileOrFileArray = args[5];
@@ -76,7 +77,9 @@ module.exports = {
                 var storageItems = [];
                 var filesCount = fileOrFileArray.length;
                 for (var i = 0; i < fileOrFileArray.length; i++) {
-                    Windows.Storage.StorageFile.getFileFromPathAsync(fileOrFileArray[i]).done(
+
+                    var uri = new Windows.Foundation.Uri(fileOrFileArray[i]);
+                    Windows.Storage.StorageFile.getFileFromApplicationUriAsync(uri).done(
                         function (index, file) {
                             var path = fileOrFileArray[index];
                             var streamRef = Windows.Storage.Streams.RandomAccessStreamReference.createFromFile(file);
